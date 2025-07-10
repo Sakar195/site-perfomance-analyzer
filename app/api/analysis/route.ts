@@ -60,7 +60,6 @@ export async function POST(request: NextRequest) {
 
     console.log(`Starting analysis for: ${url}`);
 
-    // Try PageSpeed API first, then fallback to mock data
     const metrics = await analyzeWithPageSpeedAPI(url);
 
     console.log(`Analysis completed for: ${url}`);
@@ -79,8 +78,9 @@ async function analyzeWithPageSpeedAPI(
 ): Promise<PerformanceMetrics> {
   const PAGESPEED_API_KEY = process.env.PAGESPEED_API_KEY;
 
-  console.log("🔑 API Key present:", !!PAGESPEED_API_KEY);
-  console.log("🔑 API Key length:", PAGESPEED_API_KEY?.length || 0);
+  // Uncomment for debugging
+  //   console.log("🔑 API Key present:", !!PAGESPEED_API_KEY);
+  //   console.log("🔑 API Key length:", PAGESPEED_API_KEY?.length || 0);
 
   // Only proceed if API key is available
   if (!PAGESPEED_API_KEY) {
@@ -132,12 +132,13 @@ function parsePageSpeedData(data: any): PerformanceMetrics {
     const fcp = audits["first-contentful-paint"]?.numericValue || 1500;
     const lcp = audits["largest-contentful-paint"]?.numericValue || 2500;
     const cls = audits["cumulative-layout-shift"]?.numericValue || 0.05;
+
     const totalByteWeight =
       audits["total-byte-weight"]?.numericValue || 1500000;
+
     const networkRequests =
       audits["network-requests"]?.details?.items?.length || 25;
 
-    // PageSpeed API already provides the performance score - we don't need to calculate it
     const performanceScore = Math.round(
       (lighthouse.categories?.performance?.score || 0.75) * 100
     );
