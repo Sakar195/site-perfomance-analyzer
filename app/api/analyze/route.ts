@@ -1,3 +1,5 @@
+//old api using puppeteer
+
 import { NextRequest, NextResponse } from "next/server";
 import { PerformanceMetrics } from "../../types/performance";
 
@@ -266,7 +268,7 @@ async function analyzeWithPuppeteer(url: string): Promise<PerformanceMetrics> {
 
     // Wait a bit for resources to load
     try {
-      await page.waitForTimeout(PAGE_WAIT_TIMEOUT);
+      await new Promise((resolve) => setTimeout(resolve, PAGE_WAIT_TIMEOUT));
     } catch (waitError) {
       console.warn("Wait timeout error:", waitError);
     }

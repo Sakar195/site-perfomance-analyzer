@@ -1,10 +1,10 @@
 # Website Performance Analyzer
 
-A modern Next.js web application that analyzes website performance metrics using Puppeteer to provide real-time insights into load times, page size, and Core Web Vitals.
+A modern Next.js web application that analyzes website performance metrics. Uses Puppeteer for local development and provides realistic mock data for production deployment.
 
 ## 🚀 Features
 
-- **Real-time Performance Analysis**: Analyze any website's performance metrics using Puppeteer
+- **Performance Analysis**: Analyze any website's performance metrics
 - **Core Web Vitals**: Track First Contentful Paint (FCP), Largest Contentful Paint (LCP), and Cumulative Layout Shift (CLS)
 - **Comprehensive Metrics**:
   - Load Time (First Contentful Paint)
@@ -21,7 +21,7 @@ A modern Next.js web application that analyzes website performance metrics using
 - **Frontend**: Next.js 15 with React 19
 - **Language**: TypeScript for type safety
 - **Styling**: Tailwind CSS 4
-- **Performance Analysis**: Puppeteer (headless Chrome)
+- **Performance Analysis**: Puppeteer (local development only)
 - **Build Tool**: Next.js with Turbopack
 - **API**: Next.js API Routes
 
@@ -51,15 +51,15 @@ pnpm install
 bun install
 ```
 
-### 3. Install Puppeteer
+### 3. Install Puppeteer (Optional - Local Development Only)
 
-Puppeteer requires additional setup for the headless browser:
+For real performance analysis in local development:
 
 ```bash
 npm install puppeteer
 ```
 
-**Note**: Puppeteer will download Chromium (~100MB) during installation.
+**Note**: Puppeteer will download Chromium (~100MB) during installation and only works in local development.
 
 ### 4. Start the Development Server
 
@@ -87,6 +87,20 @@ Navigate to [http://localhost:3000](http://localhost:3000) to see the applicatio
    - Load Time (First Contentful Paint)
    - Page Size and Request Count
    - Core Web Vitals (LCP, CLS)
+
+## 🌐 Production vs Development
+
+### Local Development
+
+- Uses **real Puppeteer analysis** with headless Chrome
+- Provides **actual performance metrics** from target websites
+- Requires Puppeteer installation
+
+### Production (Vercel/Serverless)
+
+- Uses **realistic mock data** based on website patterns
+- Provides **simulated performance metrics** for demonstration
+- No additional dependencies required
 
 ## 🏗️ Project Structure
 
