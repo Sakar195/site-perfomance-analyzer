@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "next": "15.3.5",
-    "puppeteer": "^24.12.1",
-    "puppeteer-core": "^24.12.1",
+    "puppeteer": "^23.0.0",
+    "puppeteer-core": "^23.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
@@ -19,7 +19,6 @@
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
-    "@types/puppeteer": "^7.0.4",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",

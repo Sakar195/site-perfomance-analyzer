@@ -8,12 +8,15 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: true,
   },
   experimental: {
-    serverComponentsExternalPackages: ["puppeteer"],
+    serverComponentsExternalPackages: ["puppeteer", "puppeteer-core"],
   },
   webpack: (config) => {
     config.resolve.alias.canvas = false;
     config.resolve.alias.encoding = false;
     return config;
+  },
+  env: {
+    PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: "true",
   },
 };
 
