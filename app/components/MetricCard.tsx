@@ -17,43 +17,45 @@ export default function MetricCard({
 }: MetricCardProps) {
   return (
     <div
-      className={`bg-white border rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105 ${
+      className={`bg-white border-2 rounded-2xl p-6 sm:p-7 shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 ${
         isGood !== undefined
           ? isGood
-            ? "border-green-200 bg-green-50/30"
-            : "border-orange-200 bg-orange-50/30"
-          : "border-gray-200"
+            ? "border-green-200 bg-gradient-to-br from-green-50/50 to-emerald-50/30"
+            : "border-orange-200 bg-gradient-to-br from-orange-50/50 to-amber-50/30"
+          : "border-gray-200 hover:border-gray-300"
       }`}
     >
-      <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+      <div className="flex items-center gap-4 mb-4">
         <div
-          className={`w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r ${color} rounded-full flex items-center justify-center text-white text-lg sm:text-xl shadow-md`}
+          className={`w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br ${color} rounded-xl flex items-center justify-center text-white text-xl sm:text-2xl shadow-lg`}
         >
           {icon}
         </div>
         <div className="flex-1">
-          <h3 className="text-base sm:text-lg font-semibold text-gray-800">
+          <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1">
             {title}
           </h3>
           {isGood !== undefined && (
             <div
-              className={`text-xs font-medium ${
-                isGood ? "text-green-600" : "text-orange-600"
+              className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold ${
+                isGood
+                  ? "text-green-700 bg-green-100"
+                  : "text-orange-700 bg-orange-100"
               }`}
             >
-              {isGood ? "✓ Good" : "⚠ Needs Improvement"}
+              {isGood ? "✓ Excellent" : "⚠ Needs Work"}
             </div>
           )}
         </div>
       </div>
 
-      <div className="text-center">
+      <div className="text-center pt-2">
         <div
-          className={`text-2xl sm:text-3xl font-bold bg-gradient-to-r ${color} bg-clip-text text-transparent mb-1 sm:mb-2`}
+          className={`text-3xl sm:text-4xl font-bold bg-gradient-to-r ${color} bg-clip-text text-transparent mb-2`}
         >
           {value}
         </div>
-        <p className="text-gray-600 text-xs sm:text-sm">{description}</p>
+        <p className="text-gray-600 text-sm font-medium">{description}</p>
       </div>
     </div>
   );

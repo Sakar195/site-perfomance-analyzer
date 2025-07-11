@@ -33,7 +33,22 @@ export default function PerformanceAnalyzer() {
   };
 
   return (
-    <div className="bg-white/95 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-2xl p-4 sm:p-6 md:p-8 mx-2 sm:mx-4">
+    <div className="bg-white border border-gray-200 rounded-3xl shadow-xl shadow-gray-100 p-6 sm:p-8 md:p-10 mx-2 sm:mx-4 backdrop-blur-sm">
+      {/* Header with subtle accent */}
+      <div className="border-b border-gray-100 pb-6 mb-8">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center">
+            <span className="text-white text-sm font-bold">🔍</span>
+          </div>
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900">
+            Performance Analysis
+          </h2>
+        </div>
+        <p className="text-gray-600 text-sm sm:text-base">
+          Enter a website URL to get comprehensive performance insights
+        </p>
+      </div>
+
       <URLInput onAnalyze={handleAnalyze} loading={loading} />
 
       {loading && <LoadingSpinner />}
@@ -44,13 +59,25 @@ export default function PerformanceAnalyzer() {
         <MetricsDisplay metrics={metrics} url={analyzedUrl} />
       )}
 
-      {/* Disclaimer for certain websites */}
-      <div className="mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-gray-200">
-        <p className="text-xs sm:text-sm text-gray-500 text-center">
-          <span className="font-medium">Note:</span> Some websites (YouTube,
-          Amazon, Facebook, etc.) may block analysis due to anti-bot protection
-          or CORS policies.
-        </p>
+      {/* Enhanced disclaimer */}
+      <div className="mt-8 pt-6 border-t border-gray-100">
+        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-4">
+          <div className="flex items-start gap-3">
+            <div className="w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+              <span className="text-white text-xs">ℹ</span>
+            </div>
+            <div>
+              <p className="text-sm text-blue-900 font-medium mb-1">
+                Analysis Note
+              </p>
+              <p className="text-xs text-blue-800 leading-relaxed">
+                Some websites may block analysis due to anti-bot protection,
+                CORS policies, or rate limiting. Results are powered by Google
+                PageSpeed Insights for accurate, real-world performance data.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

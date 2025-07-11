@@ -49,30 +49,62 @@ export default function MetricsDisplay({ metrics, url }: MetricsDisplayProps) {
   const scoreInfo = getPerformanceScore(metrics.performanceScore);
 
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      <div className="text-center border-b pb-4 sm:pb-6">
-        <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">
-          Performance Analysis Results
-        </h2>
-        <p className="text-gray-600 text-xs sm:text-sm break-all mb-3 sm:mb-4 px-2">
-          {url}
-        </p>
+    <div className="space-y-8 animate-fade-in">
+      {/* Header section with enhanced styling */}
+      <div className="text-center border-b border-gray-100 pb-8">
+        <div className="inline-flex items-center gap-2 mb-4">
+          <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center">
+            <span className="text-white text-lg font-bold">📊</span>
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">
+            Analysis Complete
+          </h2>
+        </div>
+
+        <div className="bg-gray-50 rounded-xl p-4 mb-6 max-w-2xl mx-auto">
+          <p className="text-gray-600 text-sm font-medium mb-1">
+            Analyzed Website
+          </p>
+          <p className="text-gray-900 text-sm break-all font-mono bg-white px-3 py-2 rounded-lg border">
+            {url}
+          </p>
+        </div>
+
         <div
-          className={`inline-flex flex-col sm:flex-row items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 rounded-full ${scoreInfo.bgColor}`}
+          className={`inline-flex flex-col sm:flex-row items-center gap-2 sm:gap-3 px-6 py-4 rounded-2xl border-2 ${scoreInfo.bgColor} ${
+            scoreInfo.color === "text-green-600"
+              ? "border-green-200"
+              : scoreInfo.color === "text-yellow-600"
+                ? "border-yellow-200"
+                : scoreInfo.color === "text-orange-600"
+                  ? "border-orange-200"
+                  : "border-red-200"
+          }`}
         >
-          <span className="font-semibold text-gray-800 text-sm sm:text-base">
+          <span className="font-semibold text-gray-900 text-lg">
             Performance Score:
           </span>
-          <span className={`font-bold text-lg sm:text-xl ${scoreInfo.color}`}>
+          <span className={`font-bold text-2xl sm:text-3xl ${scoreInfo.color}`}>
             {metrics.performanceScore}/100
           </span>
-          <span className={`text-xs sm:text-sm font-medium ${scoreInfo.color}`}>
-            ({scoreInfo.label})
+          <span
+            className={`text-sm font-semibold px-3 py-1 rounded-full ${
+              scoreInfo.color === "text-green-600"
+                ? "bg-green-100 text-green-800"
+                : scoreInfo.color === "text-yellow-600"
+                  ? "bg-yellow-100 text-yellow-800"
+                  : scoreInfo.color === "text-orange-600"
+                    ? "bg-orange-100 text-orange-800"
+                    : "bg-red-100 text-red-800"
+            }`}
+          >
+            {scoreInfo.label}
           </span>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+      {/* Metrics grid with enhanced styling */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <MetricCard
           title="Load Time"
           value={`${(metrics.loadTime / 1000).toFixed(2)}s`}
@@ -85,10 +117,10 @@ export default function MetricsDisplay({ metrics, url }: MetricsDisplayProps) {
         <MetricCard
           title="Page Size"
           value={formatSize(metrics.pageSize)}
-          icon="📊"
+          icon="�"
           description="Total resource size"
-          color="from-green-500 to-green-600"
-          isGood={metrics.pageSize <= 1024 * 1024 * 2} // 2MB threshold
+          color="from-emerald-500 to-green-600"
+          isGood={metrics.pageSize <= 1024 * 1024 * 2}
         />
 
         <MetricCard
@@ -96,41 +128,59 @@ export default function MetricsDisplay({ metrics, url }: MetricsDisplayProps) {
           value={metrics.requestCount.toString()}
           icon="🔄"
           description="HTTP requests made"
-          color="from-purple-500 to-purple-600"
+          color="from-purple-500 to-indigo-600"
           isGood={metrics.requestCount <= 50}
         />
       </div>
 
-      <div className="bg-gray-50 rounded-xl p-4 sm:p-6">
-        <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-3 sm:mb-4">
-          Core Web Vitals
-        </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-          <div className="bg-white p-3 sm:p-4 rounded-lg border">
-            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 sm:gap-0">
-              <span className="text-gray-600 font-medium text-sm sm:text-base">
-                Largest Contentful Paint:
-              </span>
+      {/* Core Web Vitals section with premium styling */}
+      <div className="bg-gradient-to-br from-slate-50 to-gray-50 border border-gray-200 rounded-2xl p-6 sm:p-8">
+        <div className="flex items-center gap-3 mb-6">
+          <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center">
+            <span className="text-white text-lg font-bold">🎯</span>
+          </div>
+          <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
+            Core Web Vitals
+          </h3>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+          <div className="bg-white border border-gray-200 p-5 rounded-xl shadow-sm">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+              <div>
+                <span className="text-gray-900 font-semibold text-base block">
+                  Largest Contentful Paint
+                </span>
+                <span className="text-gray-500 text-sm">
+                  Main content loading time
+                </span>
+              </div>
               <span
-                className={`font-bold text-sm sm:text-base ${getMetricColor(
+                className={`font-bold text-xl ${getMetricColor(
                   metrics.largestContentfulPaint,
                   { good: 2500, poor: 4000 }
-                )}`}
+                )} bg-white px-3 py-1 rounded-lg border`}
               >
                 {(metrics.largestContentfulPaint / 1000).toFixed(2)}s
               </span>
             </div>
           </div>
-          <div className="bg-white p-3 sm:p-4 rounded-lg border">
-            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 sm:gap-0">
-              <span className="text-gray-600 font-medium text-sm sm:text-base">
-                Cumulative Layout Shift:
-              </span>
+
+          <div className="bg-white border border-gray-200 p-5 rounded-xl shadow-sm">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+              <div>
+                <span className="text-gray-900 font-semibold text-base block">
+                  Cumulative Layout Shift
+                </span>
+                <span className="text-gray-500 text-sm">
+                  Visual stability score
+                </span>
+              </div>
               <span
-                className={`font-bold text-sm sm:text-base ${getMetricColor(
+                className={`font-bold text-xl ${getMetricColor(
                   metrics.cumulativeLayoutShift,
                   { good: 0.1, poor: 0.25 }
-                )}`}
+                )} bg-white px-3 py-1 rounded-lg border`}
               >
                 {metrics.cumulativeLayoutShift.toFixed(3)}
               </span>
@@ -138,14 +188,41 @@ export default function MetricsDisplay({ metrics, url }: MetricsDisplayProps) {
           </div>
         </div>
 
-        <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
-          <p className="text-sm text-blue-800">
-            <strong>Core Web Vitals:</strong> Google's metrics for user
-            experience.
-            <span className="text-green-600"> Good</span> •
-            <span className="text-yellow-600"> Needs Improvement</span> •
-            <span className="text-red-600"> Poor</span>
-          </p>
+        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-5">
+          <div className="flex items-start gap-3">
+            <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+              <span className="text-white text-xs font-bold">📈</span>
+            </div>
+            <div>
+              <p className="text-blue-900 font-semibold mb-2">
+                Understanding Core Web Vitals
+              </p>
+              <p className="text-blue-800 text-sm leading-relaxed mb-3">
+                These metrics reflect real user experience and directly impact
+                your Google search rankings.
+              </p>
+              <div className="flex flex-wrap items-center gap-4 text-xs">
+                <span className="flex items-center gap-1">
+                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                  <span className="text-green-700 font-medium">Excellent</span>
+                </span>
+                <span className="flex items-center gap-1">
+                  <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                  <span className="text-yellow-700 font-medium">Good</span>
+                </span>
+                <span className="flex items-center gap-1">
+                  <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                  <span className="text-orange-700 font-medium">
+                    Needs Improvement
+                  </span>
+                </span>
+                <span className="flex items-center gap-1">
+                  <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                  <span className="text-red-700 font-medium">Poor</span>
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
