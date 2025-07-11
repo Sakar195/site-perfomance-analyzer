@@ -9,7 +9,7 @@ export default function LoadingSpinner() {
         Analyzing website performance...
       </p>
       <p className="text-gray-500 text-xs sm:text-sm mt-1 text-center px-4">
-        This may take longer for complex websites
+        This may take up to 60 seconds for complex websites
       </p>
     </div>
   );
