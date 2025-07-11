@@ -105,7 +105,21 @@ async function analyzeWithPageSpeedAPI(
     if (!response.ok) {
       const errorText = await response.text();
       console.error("📡 PageSpeed API Error Response:", errorText);
-      throw new Error(`PageSpeed API error: ${response.status} - ${errorText}`);
+      
+      // Handle specific error cases with user-friendly messages
+      if (response.status === 429) {
+        throw new Error("Rate limit exceeded. Please wait a few minutes before trying again.");
+      }
+      
+      if (response.status === 500) {
+        throw new Error("Google's servers are temporarily busy. Please try again in a few minutes.");
+      }
+      
+      if (response.status === 400) {
+        throw new Error("The website URL cannot be analyzed. It may be blocked or have restrictions.");
+      }
+      
+      throw new Error(`Analysis temporarily unavailable (Error ${response.status}). Please try again later.`);
     }
 
     const data = await response.json();

@@ -43,6 +43,15 @@ export default function PerformanceAnalyzer() {
       {metrics && !loading && (
         <MetricsDisplay metrics={metrics} url={analyzedUrl} />
       )}
+
+      {/* Disclaimer for certain websites */}
+      <div className="mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-gray-200">
+        <p className="text-xs sm:text-sm text-gray-500 text-center">
+          <span className="font-medium">Note:</span> Some websites (YouTube,
+          Amazon, Facebook, etc.) may block analysis due to anti-bot protection
+          or CORS policies.
+        </p>
+      </div>
     </div>
   );
 }
