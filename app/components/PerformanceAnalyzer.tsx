@@ -1,12 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import URLInput from "./URLInput";
-import MetricsDisplay from "./MetricsDisplay";
-import LoadingSpinner from "./LoadingSpinner";
-import ErrorMessage from "./ErrorMessage";
+import LazyLoadingFallback from "./LazyLoadingFallback";
 import { analyzeWebsitePerformance } from "../services/performanceService";
 import { PerformanceMetrics } from "../types/performance";
+
+// Lazy load components that are conditionally rendered
+const MetricsDisplay = lazy(() => import("./MetricsDisplay"));
+const LoadingSpinner = lazy(() => import("./LoadingSpinner"));
+const ErrorMessage = lazy(() => import("./ErrorMessage"));
 
 export default function PerformanceAnalyzer() {
   const [metrics, setMetrics] = useState<PerformanceMetrics | null>(null);
@@ -51,12 +54,43 @@ export default function PerformanceAnalyzer() {
 
       <URLInput onAnalyze={handleAnalyze} loading={loading} />
 
-      {loading && <LoadingSpinner />}
+      {loading && (
+        <Suspense
+          fallback={
+            <LazyLoadingFallback
+              type="spinner"
+              message="Loading performance analysis..."
+            />
+          }
+        >
+          <LoadingSpinner />
+        </Suspense>
+      )}
 
-      {error && <ErrorMessage message={error} />}
+      {error && (
+        <Suspense
+          fallback={
+            <LazyLoadingFallback
+              type="skeleton"
+              message="Loading error details..."
+            />
+          }
+        >
+          <ErrorMessage message={error} />
+        </Suspense>
+      )}
 
       {metrics && !loading && (
-        <MetricsDisplay metrics={metrics} url={analyzedUrl} />
+        <Suspense
+          fallback={
+            <LazyLoadingFallback
+              type="skeleton"
+              message="Loading analysis results..."
+            />
+          }
+        >
+          <MetricsDisplay metrics={metrics} url={analyzedUrl} />
+        </Suspense>
       )}
 
       {/* Enhanced disclaimer */}

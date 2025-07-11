@@ -15,9 +15,6 @@ const nextConfig: NextConfig = {
     config.resolve.alias.encoding = false;
     return config;
   },
-  env: {
-    PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: "true",
-  },
 };
 
 export default nextConfig;

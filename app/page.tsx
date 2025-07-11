@@ -1,4 +1,10 @@
-import PerformanceAnalyzer from "./components/PerformanceAnalyzer";
+import { lazy, Suspense } from "react";
+import LazyLoadingFallback from "./components/LazyLoadingFallback";
+
+// Lazy load the main component
+const PerformanceAnalyzer = lazy(
+  () => import("./components/PerformanceAnalyzer")
+);
 
 export default function Home() {
   return (
@@ -45,7 +51,18 @@ export default function Home() {
       </header>
 
       <main className="relative max-w-5xl mx-auto px-2 sm:px-4">
-        <PerformanceAnalyzer />
+        <Suspense
+          fallback={
+            <div className="bg-white border border-gray-200 rounded-3xl shadow-xl shadow-gray-100 p-6 sm:p-8 md:p-10 mx-2 sm:mx-4">
+              <LazyLoadingFallback
+                type="skeleton"
+                message="Loading Performance Analyzer..."
+              />
+            </div>
+          }
+        >
+          <PerformanceAnalyzer />
+        </Suspense>
       </main>
 
       {/* Bottom decoration */}

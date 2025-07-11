@@ -1,5 +1,9 @@
+import { lazy, Suspense } from "react";
 import { PerformanceMetrics } from "../types/performance";
-import MetricCard from "./MetricCard";
+import LazyLoadingFallback from "./LazyLoadingFallback";
+
+// Lazy load MetricCard component
+const MetricCard = lazy(() => import("./MetricCard"));
 
 interface MetricsDisplayProps {
   metrics: PerformanceMetrics;
@@ -105,32 +109,38 @@ export default function MetricsDisplay({ metrics, url }: MetricsDisplayProps) {
 
       {/* Metrics grid with enhanced styling */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <MetricCard
-          title="Load Time"
-          value={`${(metrics.loadTime / 1000).toFixed(2)}s`}
-          icon="⚡"
-          description="First Contentful Paint"
-          color="from-blue-500 to-blue-600"
-          isGood={metrics.loadTime <= 1800}
-        />
+        <Suspense fallback={<LazyLoadingFallback type="card" />}>
+          <MetricCard
+            title="Load Time"
+            value={`${(metrics.loadTime / 1000).toFixed(2)}s`}
+            icon="⚡"
+            description="First Contentful Paint"
+            color="from-blue-500 to-blue-600"
+            isGood={metrics.loadTime <= 1800}
+          />
+        </Suspense>
 
-        <MetricCard
-          title="Page Size"
-          value={formatSize(metrics.pageSize)}
-          icon="�"
-          description="Total resource size"
-          color="from-emerald-500 to-green-600"
-          isGood={metrics.pageSize <= 1024 * 1024 * 2}
-        />
+        <Suspense fallback={<LazyLoadingFallback type="card" />}>
+          <MetricCard
+            title="Page Size"
+            value={formatSize(metrics.pageSize)}
+            icon="📦"
+            description="Total resource size"
+            color="from-emerald-500 to-green-600"
+            isGood={metrics.pageSize <= 1024 * 1024 * 2}
+          />
+        </Suspense>
 
-        <MetricCard
-          title="Requests"
-          value={metrics.requestCount.toString()}
-          icon="🔄"
-          description="HTTP requests made"
-          color="from-purple-500 to-indigo-600"
-          isGood={metrics.requestCount <= 50}
-        />
+        <Suspense fallback={<LazyLoadingFallback type="card" />}>
+          <MetricCard
+            title="Requests"
+            value={metrics.requestCount.toString()}
+            icon="🔄"
+            description="HTTP requests made"
+            color="from-purple-500 to-indigo-600"
+            isGood={metrics.requestCount <= 50}
+          />
+        </Suspense>
       </div>
 
       {/* Core Web Vitals section with premium styling */}
